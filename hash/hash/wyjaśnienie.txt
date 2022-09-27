@@ -1,0 +1,4 @@
+Wykorzystałem hashowanie za pomocą sha256, ponieważ oferuje dużo większe bezpieczeństwo, niż md5. 
+Jest bezpieczniejszy, bardziej niezawodny i mniej podatny na uszkodzenia.
+Za pomocą komentarzy opisałem kluczowe linie kodu.
+Dodatkowo zawarłem zakomendowaną funkcję do md5 dla porównania.

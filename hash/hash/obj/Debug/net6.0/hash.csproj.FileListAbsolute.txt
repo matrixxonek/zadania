@@ -1,0 +1,15 @@
+C:\Users\Admin\source\repos\zadania\hash\hash\bin\Debug\net6.0\hash.exe
+C:\Users\Admin\source\repos\zadania\hash\hash\bin\Debug\net6.0\hash.deps.json
+C:\Users\Admin\source\repos\zadania\hash\hash\bin\Debug\net6.0\hash.runtimeconfig.json
+C:\Users\Admin\source\repos\zadania\hash\hash\bin\Debug\net6.0\hash.dll
+C:\Users\Admin\source\repos\zadania\hash\hash\bin\Debug\net6.0\hash.pdb
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.AssemblyInfo.cs
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.dll
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\refint\hash.dll
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.pdb
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\hash.genruntimeconfig.cache
+C:\Users\Admin\source\repos\zadania\hash\hash\obj\Debug\net6.0\ref\hash.dll
