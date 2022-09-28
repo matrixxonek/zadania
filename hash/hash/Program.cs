@@ -36,4 +36,3 @@ static string ComputeSha256Hash(string rawData)
 }
 //Console.WriteLine(CreateMD5Hash(password));
 Console.WriteLine(ComputeSha256Hash(password));
-//a
