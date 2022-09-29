@@ -1,58 +1,59 @@
 ﻿using System.Diagnostics.Tracing;
 
-class Context
+class Context<T>
 {
-    private Istrategy _strategy;
+    private Istrategy<T> _strategy;
     public Context() { }
-    public Context(Istrategy strategy)
+    public Context(Istrategy<T> strategy)
     {
         this._strategy = strategy;
     }
-    public void SetStrategy(Istrategy strategy)
+    public void SetStrategy(Istrategy<T> strategy)
     {
         this._strategy = strategy;
     }
-    public void DoSomeBusinessLogic()
+    public void DoSomeBusinessLogic(T list)
     {
-        var result = this._strategy.DoAlgorithm(new List<string> { "a", "b", "c"});
+        var result = this._strategy.DoAlgorithm(list);
         string resultStr = string.Empty;
-        foreach (var element in result as List<string>)
+        foreach (var element in result as List<T>)
         {
             resultStr += element + ", ";
         }
         Console.WriteLine(resultStr);
     }
 }
-public interface Istrategy
+public interface Istrategy<T>
 {
-    object DoAlgorithm(object data);
+    public T DoAlgorithm(T data);
 }
-class BubbleSort : Istrategy
+class BubbleSort<T> : Istrategy<T>
 {
-    public object DoAlgorithm(object data)
+    public T DoAlgorithm(T data)
     {
-        var list = data as List<string>;
-        list.Sort();
+        T list = data;
         return list;
     }
 }
-class QuickSort : Istrategy
+class QuickSort<T> : Istrategy<T>
 {
-    public object DoAlgorithm(object data)
+    public T DoAlgorithm(T data)
     {
-        var list = data as List<string>;
-        list.Sort();
+        T list = data;
         return list;
     }
 }
 
-class Program
+class Program 
 {
     static void Main(string[] args)
     {
-        var context = new Context();
-        context.SetStrategy(new BubbleSort());
-        context.DoSomeBusinessLogic();
+        List<string> wyrazy = new List<string>();
+        wyrazy.Add("a");
+        wyrazy.Add("b");
+        Context<T> context = new Context<T>();
+        context.SetStrategy(new BubbleSort<T>());
+        context.DoSomeBusinessLogic(wyrazy);
     }
 }
 
