@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Tracing;
 
-class Context<T>
+public class Context<T>
 {
     private Istrategy<T> _strategy;
     public Context() { }
@@ -12,48 +12,18 @@ class Context<T>
     {
         this._strategy = strategy;
     }
-    public void DoSomeBusinessLogic(T list)
+    public void DoSomeBusinessLogic(List<T> list)
     {
         var result = this._strategy.DoAlgorithm(list);
         string resultStr = string.Empty;
-        foreach (var element in result as List<T>)
+        Console.WriteLine(result);
+        Console.ReadKey();
+        foreach (var element in result)
         {
             resultStr += element + ", ";
         }
+        
         Console.WriteLine(resultStr);
-    }
-}
-public interface Istrategy<T>
-{
-    public T DoAlgorithm(T data);
-}
-class BubbleSort<T> : Istrategy<T>
-{
-    public T DoAlgorithm(T data)
-    {
-        T list = data;
-        return list;
-    }
-}
-class QuickSort<T> : Istrategy<T>
-{
-    public T DoAlgorithm(T data)
-    {
-        T list = data;
-        return list;
-    }
-}
-
-class Program 
-{
-    static void Main(string[] args)
-    {
-        List<string> wyrazy = new List<string>();
-        wyrazy.Add("a");
-        wyrazy.Add("b");
-        Context<T> context = new Context<T>();
-        context.SetStrategy(new BubbleSort<T>());
-        context.DoSomeBusinessLogic(wyrazy);
     }
 }
 
