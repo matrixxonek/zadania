@@ -51,7 +51,7 @@ public class Program
 
         
     }
-    public static void SetContextType()
+    public static void SetContextType() 
     {
         switch (typSortu)
         {

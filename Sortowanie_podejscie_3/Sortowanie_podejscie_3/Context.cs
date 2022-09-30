@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Tracing;
 
-public class Context<T>
+public class Context<T> 
 {
     private Istrategy<T> _strategy;
     public Context() { }
@@ -12,7 +12,7 @@ public class Context<T>
     {
         this._strategy = strategy;
     }
-    public void DoSomeBusinessLogic(List<T> list)
+    public void DoSomeBusinessLogic<T>(List<T> list)
     {
         var result = this._strategy.DoAlgorithm(list);
         string resultStr = string.Empty;
