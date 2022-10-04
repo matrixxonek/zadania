@@ -1,4 +1,10 @@
-﻿using Octokit;
+﻿using GitLabApiClient;
+using GitLabApiClient.Models.MergeRequests.Responses;
+using Octokit;
+using System.Net;
+using System;
+using SharpBucket.V2;
+using SharpBucket;
 
 Console.WriteLine("Wybierz Swoje repo: GitHub, Bitbucket, GitLab");
 string baza = Console.ReadLine();
@@ -11,27 +17,54 @@ switch (baza)
         Bit();
         break;
     case "GitLab":
+        GitLab();
         break;
-        Gl();
     default:
         Console.WriteLine("Podano niepoprawa opcje");
         break;
 }
 
-void Gl()
+async void GitLab()
 {
-    Console.WriteLine("Wybrano GL");
+    Console.WriteLine("Podaj personal access token");
+    string token = Console.ReadLine();
+    var client = new GitLabClient("https://gitlab.com", token);
+    Console.WriteLine("Podaj ID swojego repo");
+    string id = Console.ReadLine();
+    var requests = client.MergeRequests.GetAsync(id).Result;
+    foreach(var request in requests)
+        Console.WriteLine(request.Title);
 }
 
 void Bit()
 {
     Console.WriteLine("Wybrano BB");
+    var sharpBucket = new SharpBucketV2();
+    Console.WriteLine("podaj consumer key");
+    var consumerKey = Console.ReadLine();
+    Console.WriteLine("podaj consumer secret key");
+    var consumerSecretKey = Console.ReadLine();
+    sharpBucket.OAuth2ClientCredentials(consumerKey,consumerSecretKey);
+   /* Console.WriteLine("Podaj login");
+    var username = Console.ReadLine();
+    Console.WriteLine("Podaj haslo");
+    var password = Console.ReadLine()*/;
+    //sharpBucket.BasicAuthentication(username, password);
+    Console.WriteLine("podaj nazwe użytkownika");
+    var name = Console.ReadLine();
+    var userEndPoint = sharpBucket.UsersEndPoint(name);
+    var profil = userEndPoint.GetProfile();
+    Console.WriteLine("podaj nazwe repo");
+    var repoName = Console.ReadLine();
+    var requests = sharpBucket.RepositoriesEndPoint().RepositoryResource(name, repoName).PullRequestsResource().EnumeratePullRequests().ToList();
+    foreach (var item in requests)
+    {
+        Console.WriteLine(item.title);
+    }
 }
 
 async void Git()
 {
-    List<PullRequest> requests = new List<PullRequest>();
-    var request = new PullRequestRequest();
     Console.WriteLine("Wybrano Gita");
     var client = new GitHubClient(new ProductHeaderValue("my-app"));
     Console.WriteLine("Podaj Personal Access Token");
@@ -44,21 +77,14 @@ async void Git()
     {
         return client.Repository.GetAllForCurrent().Result.ToList();
     }
-    List<PullRequest> GetPullRequests(Repository repo)
-    {
-        return client.Repository.PullRequest.GetAllForRepository(userInfo.Login, repo.Name).Result.ToList();
-    }
     List<Repository> repos = GetGithubRepository();
-    List<PullRequest> pulls = client.PullRequest.GetAllForRepository(repos[1].Id).Result.ToList();
-
-    //Console.WriteLine(client.Repository.PullRequest.GetAllForRepository("Daruyami", "praktyki-xopero").Result);
-    var abc = client.Repository.PullRequest.GetAllForRepository("Daruyami", "praktyki-xopero").Result;
-    foreach (var a in abc)
-        Console.WriteLine(a.Title);
-    /*foreach (var repo in repos)
-    {
-        requests = GetPullRequests(repo);
-        Console.WriteLine(requests);
-    }
+    Console.WriteLine("Lista dostępnych repozytoriów");
+    foreach (var repo in repos)
+        Console.WriteLine(repo.Name);
+    Console.WriteLine("Podaj nazwe repo");
+    string repoName = Console.ReadLine();
+    var pullRequests = client.Repository.PullRequest.GetAllForRepository(userInfo.Login, repoName).Result;
+    foreach (var request in pullRequests)
+        Console.WriteLine(request.Title);
 }
 
