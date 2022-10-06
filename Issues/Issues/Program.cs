@@ -12,13 +12,14 @@ static class Program
     public static User user;
     public static System.Timers.Timer timer;
     private static System.Timers.Timer aTimer;
+    public static string differentIssuesString = " ";
     static public void Main(String[] args)
     {
         client.Credentials = tokenAuth;
         user = client.User.Current().Result;
         userName = user.Login;
-        startIssues = getIssues();
         aTimer = new System.Timers.Timer();
+        startIssues = getIssues();
         setTime();
     }
     static public IReadOnlyList<Issue> getIssues()
@@ -31,7 +32,8 @@ static class Program
     }
     static public IReadOnlyList<Issue> compareIssue()
     {
-        return newIssues.Except(startIssues).Union(startIssues.Except(newIssues)).ToList();
+        //return newIssues.Except(startIssues).Union(startIssues.Except(newIssues)).ToList();
+        return newIssues.Except(startIssues).ToList();
     }
     static public void setDifferentIssues()
     {
@@ -51,6 +53,11 @@ static class Program
     }
     private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
     {
-        //sendMessage();
+        setNewIssue();
+        setDifferentIssues();
+        differentIssuesString = " ";
+        foreach (Issue issue in differentIssues)
+            differentIssuesString += (Environment.NewLine + issue.Title.ToString());
+        SendMail mail = new SendMail(differentIssuesString);
     }
 }
