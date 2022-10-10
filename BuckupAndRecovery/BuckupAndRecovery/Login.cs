@@ -14,8 +14,9 @@ public class Login
 {
     public static GitHubClient client = new GitHubClient(new Octokit.ProductHeaderValue("my-app"));
     public SharpBucketV2 sharpBucket = new SharpBucketV2();
-    public Selection select = new Selection();
-    public List<Octokit.Issue> GitIssues;
+    public static Selection select = new Selection();
+    public static List<Octokit.Issue> GitIssues;
+    public static string repoName;
 
     public void LoginGit()
     {
@@ -24,9 +25,8 @@ public class Login
         Credentials tokenAuth = new Credentials(token);
         client.Credentials = tokenAuth;
         Console.WriteLine("Podaj nazwę repo");
-        string repoName = Console.ReadLine();
-        //GitIssues = client.Issue.GetAllForRepository(client.User.Current().Result.Login, repoName).Result.ToList();
-        //client.Issue.Get().Result.
+        repoName = Console.ReadLine();
+        GitIssues = client.Issue.GetAllForRepository(client.User.Current().Result.Login, repoName).Result.ToList();
     }
     public void LoginBucket()
     {
@@ -38,6 +38,7 @@ public class Login
         consumerSecretKey = Console.ReadLine();
         sharpBucket.OAuth2ClientCredentials(consumerKey, consumerSecretKey);
         //sharpBucket.UserEndPoint().GetUser().
+        //sharpBucket.RepositoriesEndPoint().RepositoryResource().
     }
     public void getSwitch()
     {

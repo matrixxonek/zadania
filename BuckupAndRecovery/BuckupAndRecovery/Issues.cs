@@ -10,6 +10,6 @@ public class Issues
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     public string Title { get; set; }
-    public string Comment { get; set; }
+    public int Comment { get; set; }
     public string Body { get; set; }
 }
