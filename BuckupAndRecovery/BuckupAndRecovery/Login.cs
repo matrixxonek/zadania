@@ -13,11 +13,14 @@ using SharpBucket.V2.Pocos;
 public class Login
 {
     public static GitHubClient client = new GitHubClient(new Octokit.ProductHeaderValue("my-app"));
-    public SharpBucketV2 sharpBucket = new SharpBucketV2();
+    public static SharpBucketV2 sharpBucket = new SharpBucketV2();
     public static Selection select = new Selection();
     public static List<Octokit.Issue> GitIssues;
     public static string repoName;
+    public static string name;
+    public static string repoNameBB;
 
+    public static List<SharpBucket.V2.Pocos.Issue> BitIssues;
     public void LoginGit()
     {
         Console.WriteLine("Podaj token");
@@ -37,8 +40,11 @@ public class Login
         Console.WriteLine("Podaj sekreny klucz");
         consumerSecretKey = Console.ReadLine();
         sharpBucket.OAuth2ClientCredentials(consumerKey, consumerSecretKey);
-        //sharpBucket.UserEndPoint().GetUser().
-        //sharpBucket.RepositoriesEndPoint().RepositoryResource().
+        Console.WriteLine("podaj nazwe uzytkownika");
+        name = Console.ReadLine();
+        Console.WriteLine("Podaj nazwe repo");
+        repoNameBB = Console.ReadLine();
+        BitIssues = sharpBucket.RepositoriesEndPoint().RepositoryResource(name, repoNameBB).IssuesResource().EnumerateIssues().ToList();
     }
     public void getSwitch()
     {

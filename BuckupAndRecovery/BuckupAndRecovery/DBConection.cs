@@ -8,6 +8,8 @@ using System.Data;
 using System.Collections;
 using SQLitePCL;
 using System.Security.Cryptography;
+using SharpBucket;
+using System.Xml.Linq;
 
 public class DBConection 
 {
@@ -23,7 +25,6 @@ public class DBConection
             var options = new SQLiteConnectionString(databasePath, SQLiteOpenFlags.FullMutex | SQLiteOpenFlags.ReadWrite, false);
             db = new SQLiteConnection(options);
             db.CreateTable<Issues>();
-
         }
         catch (Exception ex)
         {
@@ -70,13 +71,18 @@ public class DBConection
                 }
                 break;
             case "Bitbucket":
-
+                foreach (Issues issue in myIssues)
+                {
+                    Console.WriteLine("CreateIssue");
+                    Octokit.NewIssue issue1 = new Octokit.NewIssue(issue.Title);
+                    issue1.Body = issue.Body;
+                    Login.client.Issue.Create(Login.client.User.Current().Result.Login, Login.repoName, issue1);
+                }
                 break;
             default:
                 Console.WriteLine("Cos poszlo nie tak przepraszamy");
                 break;
         }
-        
     }
     public void Backup(int id, string title, int comments, string body)
     {
@@ -87,6 +93,7 @@ public class DBConection
             Comment = comments,
             Body = body
         };
+        db.Insert(issue);
     }
     public void DoBackup()
     {
@@ -99,7 +106,10 @@ public class DBConection
                 }
                 break;
             case "Bitbucket":
-
+                foreach (var issue in Login.BitIssues)
+                {
+                    Backup(issue.id, issue.title, 0, issue.content);
+                }
                 break;
             default:
                 Console.WriteLine("Cos poszlo nie tak przepraszamy");
